@@ -20,7 +20,7 @@ public class ESPView extends View implements Runnable {
     Paint mFilledPaint;
     Paint mTextPaint;
     Thread mThread;
-    int FPS = 120;
+    int FPS = 60;
     long sleepTime;
     Date time;
     SimpleDateFormat formatter;
@@ -79,6 +79,12 @@ public class ESPView extends View implements Runnable {
 
     public void ClearCanvas(Canvas cvs) {
         cvs.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+    }
+
+    public void setFPS(int fps) {
+        if (fps <= 0) return; // avoid divide by zero
+        FPS = fps;
+        sleepTime = 1000 / FPS;
     }
 
     public void DrawLine(Canvas cvs, int a, int r, int g, int b, float lineWidth, float fromX, float fromY, float toX, float toY) {
