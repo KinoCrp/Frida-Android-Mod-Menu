@@ -17,7 +17,7 @@ public class Config {
     protected final int SEEKBAR_COLOR = Color.parseColor("#80CBC4");
     protected final int CHECKBOX_COLOR = Color.parseColor("#80CBC4");
     protected final String MENU_TITLE = Html.fromHtml("Modded By Kinocrp").toString();
-    protected final String MENU_SUBTITLE = "https://github.com/KinoCrp";
+    protected final String MENU_SUBTITLE = "https://github.com/Kinocrp";
     protected final int MENU_WIDTH = 290;
     protected final int MENU_HEIGHT = 210;
     protected final int MENU_BG_COLOR = Color.parseColor("#EE1C2A35");

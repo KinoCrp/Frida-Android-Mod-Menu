@@ -32,7 +32,7 @@ public class ESPView extends View implements Runnable {
         setBackgroundColor(Color.TRANSPARENT);
         time = new Date();
         formatter = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        sleepTime = 1000 / FPS;
+        sleepTime = (FPS > 0) ? 1000 / FPS : 1000;
         mThread = new Thread(this);
         mThread.start();
     }
@@ -50,6 +50,10 @@ public class ESPView extends View implements Runnable {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         while (mThread.isAlive() && !mThread.isInterrupted()) {
             try {
+                if (FPS == 0) {
+                    Thread.sleep(500); // Pause check every 0.5s
+                    continue;          // Skip drawing
+                }
                 long t1 = System.currentTimeMillis();
                 postInvalidate();
                 long td = System.currentTimeMillis() - t1;
@@ -70,7 +74,7 @@ public class ESPView extends View implements Runnable {
         mFilledPaint.setAntiAlias(true);
         mFilledPaint.setColor(Color.rgb(0, 0, 0));
         mTextPaint = new Paint();
-        mTextPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mTextPaint.setStyle(Paint.Style.FILL);
         mTextPaint.setAntiAlias(true);
         mTextPaint.setColor(Color.rgb(0, 0, 0));
         mTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -82,9 +86,8 @@ public class ESPView extends View implements Runnable {
     }
 
     public void setFPS(int fps) {
-        if (fps <= 0) return; // avoid divide by zero
         FPS = fps;
-        sleepTime = 1000 / FPS;
+        sleepTime = (FPS > 0) ? 1000 / FPS : 1000;
     }
 
     public void DrawLine(Canvas cvs, int a, int r, int g, int b, float lineWidth, float fromX, float fromY, float toX, float toY) {
